@@ -7,8 +7,7 @@ import java.util.UUID;
 
 @Data
 @Builder
-public class BuildingDto {
+public class HouseTypeDto {
     private UUID id;
-    private String completionTime;
-    private UUID idHouseType;
+    private String type;
 }

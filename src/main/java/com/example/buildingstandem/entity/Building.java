@@ -27,7 +27,7 @@ public class Building {
     private String completionTime;
     @ManyToOne
     @JoinColumn(name = "house_type_id")
-    private Type houseTypes;
+    private HouseType houseTypes;
     @ManyToOne
     @JoinColumn(name = "type_of_construction_id")
     private  TypeOfConstruction typeOfConstruction;

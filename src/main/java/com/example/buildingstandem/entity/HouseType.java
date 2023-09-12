@@ -4,7 +4,6 @@ import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.UUID;
 @Entity
 @Table(name= "types")
@@ -15,7 +14,7 @@ import java.util.UUID;
 @Getter
 @EqualsAndHashCode
 @ToString
-public class Type {
+public class HouseType {
     @Id
     @GenericGenerator(name = "custom_gen",
             strategy = "com.example.buildingstandem.entity.CustomIdGenerator")
