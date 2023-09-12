@@ -4,10 +4,10 @@ import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-
+import java.util.List;
 import java.util.UUID;
 @Entity
-@Table(name= "typeOfConstructions")
+@Table(name= "types")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -15,14 +15,14 @@ import java.util.UUID;
 @Getter
 @EqualsAndHashCode
 @ToString
-public class TypeOfConstruction {
+public class Type {
     @Id
     @GenericGenerator(name = "custom_gen",
             strategy = "com.example.buildingstandem.entity.CustomIdGenerator")
     @GeneratedValue(generator = "custom_gen")
     @Column(name = "id")
     private UUID id;
-    @Column(name = "typeConstruction")
-    private String typeConstruction;
+    @Column(name = "type")
+    private String type;
 
 }

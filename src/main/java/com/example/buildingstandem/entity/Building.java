@@ -4,7 +4,6 @@ import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -22,8 +21,14 @@ public class Building {
     @GenericGenerator(name = "custom_gen",
             strategy = "com.example.buildingstandem.entity.CustomIdGenerator")
     @GeneratedValue(generator = "custom_gen")
+    @Column(name = "id")
     private UUID id;
+    @Column(name = "completionTime")
     private String completionTime;
-    @OneToOne
-    private Set<HouseType> houseTypes;
+    @ManyToOne
+    @JoinColumn(name = "house_type_id")
+    private Type houseTypes;
+    @ManyToOne
+    @JoinColumn(name = "type_of_construction_id")
+    private  TypeOfConstruction typeOfConstruction;
 }
