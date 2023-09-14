@@ -19,19 +19,24 @@ import static org.springframework.http.ResponseEntity.ok;
 public class BuildingController {
     @Autowired
     private BuildingService buildingService;
+    @Autowired
+    private BuildingMapper mapper;
 
 
     @PostMapping("/save")
     public ResponseEntity<Building> saveBuilding(@RequestBody BuildingDto buildingdto) {
 
-        return ok(buildingService.save(BuildingMapper.INSTANCE.toDto(buildingdto)));
+        return ok(buildingService.save(mapper.toEntity(buildingdto)));
     }
 
     @GetMapping("/id")
     @ResponseBody
-    public ResponseEntity<Building> findById(@RequestParam UUID id) {
+    public ResponseEntity<BuildingDto> findById(@RequestParam UUID id) {
+
         Building byId = buildingService.findById(id);
-        return ok(byId);
+        BuildingDto buildingDto = mapper.toDto(byId);
+
+        return ok(buildingDto);
     }
 
 }
