@@ -13,5 +13,4 @@ public class BuildingDto {
     private String completionTime;
     private UUID idHouseType;
     private UUID idTypeOfConstruction;
-//    private HouseType houseTypes;
 }

@@ -37,10 +37,17 @@ public class BuildingController {
         BuildingDescriptionDto buildingDescriptionDto = mapper.toDescriptionDto(byId);
         return ok(buildingDescriptionDto);
     }
+
     @GetMapping("/findAll")
-    public List<AllBuildingDto> findAllBuildingDto (){
+    public List<AllBuildingDto> findAllBuildingDto() {
         List<Building> all = buildingService.findAll();
         return mapper.toAllBuildingDto(all);
     }
 
+    @PostMapping("/update")
+    @ResponseBody
+    public void updateBuilding(@RequestParam BuildingDto buildingDto){
+        buildingService.updateBuilding(buildingDto);
+//        return ok(buildingService.updateBuilding(buildingDto)).getBody();
+    }
 }
