@@ -20,9 +20,11 @@ import static org.springframework.http.ResponseEntity.ok;
 public class HouseTypeController {
     @Autowired
     private HouseTypeService houseTypeService;
+    @Autowired
+    private HouseTypeMapper mapper;
 
     @PostMapping
     public ResponseEntity <HouseType> saveType (@RequestBody HouseTypeDto houseTypeDto){
-        return ok(houseTypeService.save(HouseTypeMapper.INSTANCE.toDto(houseTypeDto)));
+        return ok(houseTypeService.save(mapper.toEntity(houseTypeDto)));
     }
 }

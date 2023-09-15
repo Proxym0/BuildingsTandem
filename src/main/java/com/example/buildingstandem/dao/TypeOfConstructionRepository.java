@@ -3,5 +3,7 @@ package com.example.buildingstandem.dao;
 import com.example.buildingstandem.entity.TypeOfConstruction;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface TypeOfConstructionRepository extends JpaRepository<TypeOfConstruction, Long> {
+import java.util.UUID;
+
+public interface TypeOfConstructionRepository extends JpaRepository<TypeOfConstruction, UUID> {
 }

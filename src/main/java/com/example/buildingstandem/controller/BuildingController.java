@@ -1,5 +1,7 @@
 package com.example.buildingstandem.controller;
 
+import com.example.buildingstandem.dto.AllBuildingDto;
+import com.example.buildingstandem.dto.BuildingDescriptionDto;
 import com.example.buildingstandem.dto.BuildingDto;
 import com.example.buildingstandem.entity.Building;
 import com.example.buildingstandem.mapper.BuildingMapper;
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 import static org.springframework.http.ResponseEntity.ok;
@@ -19,19 +22,32 @@ import static org.springframework.http.ResponseEntity.ok;
 public class BuildingController {
     @Autowired
     private BuildingService buildingService;
-
+    @Autowired
+    private BuildingMapper mapper;
 
     @PostMapping("/save")
     public ResponseEntity<Building> saveBuilding(@RequestBody BuildingDto buildingdto) {
-
-        return ok(buildingService.save(BuildingMapper.INSTANCE.toDto(buildingdto)));
+        return ok(buildingService.save(mapper.toEntity(buildingdto)));
     }
 
     @GetMapping("/id")
     @ResponseBody
-    public ResponseEntity<Building> findById(@RequestParam UUID id) {
+    public ResponseEntity<BuildingDescriptionDto> findById(@RequestParam UUID id) {
         Building byId = buildingService.findById(id);
-        return ok(byId);
+        BuildingDescriptionDto buildingDescriptionDto = mapper.toDescriptionDto(byId);
+        return ok(buildingDescriptionDto);
     }
 
+    @GetMapping("/findAll")
+    public List<AllBuildingDto> findAllBuildingDto() {
+        List<Building> all = buildingService.findAll();
+        return mapper.toAllBuildingDto(all);
+    }
+
+    @PostMapping("/update")
+    @ResponseBody
+    public void updateBuilding(@RequestParam BuildingDto buildingDto){
+        buildingService.updateBuilding(buildingDto);
+//        return ok(buildingService.updateBuilding(buildingDto)).getBody();
+    }
 }

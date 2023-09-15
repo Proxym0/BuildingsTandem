@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface BuildingRepository extends JpaRepository<Building, Long> {
+public interface BuildingRepository extends JpaRepository<Building, UUID> {
         Optional<Building> findById(UUID uuid);
 }
