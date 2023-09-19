@@ -1,8 +1,9 @@
 package com.example.buildingstandem.controller;
 
-import com.example.buildingstandem.dto.AllBuildingDto;
-import com.example.buildingstandem.dto.BuildingDescriptionDto;
-import com.example.buildingstandem.dto.BuildingDto;
+import com.example.buildingstandem.controller.util.ValidUuid;
+import com.example.buildingstandem.dto.duildingDto.AllBuildingDto;
+import com.example.buildingstandem.dto.duildingDto.BuildingDescriptionDto;
+import com.example.buildingstandem.dto.duildingDto.BuildingDto;
 import com.example.buildingstandem.entity.Building;
 import com.example.buildingstandem.mapper.BuildingMapper;
 import com.example.buildingstandem.service.BuildingService;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,7 +28,8 @@ public class BuildingController {
     private BuildingMapper mapper;
 
     @PostMapping("/save")
-    public ResponseEntity<Building> saveBuilding(@RequestBody BuildingDto buildingdto) {
+    public ResponseEntity<Building> saveBuilding(@RequestBody @Valid @ValidUuid BuildingDto buildingdto) {
+
         return ok(buildingService.save(mapper.toEntity(buildingdto)));
     }
 
@@ -46,8 +49,14 @@ public class BuildingController {
 
     @PostMapping("/update")
     @ResponseBody
-    public void updateBuilding(@RequestParam BuildingDto buildingDto){
+    public Building updateBuilding(@RequestBody BuildingDto buildingDto) {
         buildingService.updateBuilding(buildingDto);
-//        return ok(buildingService.updateBuilding(buildingDto)).getBody();
+        return ok(buildingService.updateBuilding(buildingDto)).getBody();
+    }
+
+    @DeleteMapping("/delete")
+    @ResponseBody
+    public void deleteBuilding(@RequestParam UUID id) {
+        buildingService.deleteBuilding(id);
     }
 }

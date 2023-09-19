@@ -1,4 +1,4 @@
-package com.example.buildingstandem.dto;
+package com.example.buildingstandem.dto.duildingDto;
 
 import com.example.buildingstandem.entity.Building;
 import lombok.Builder;
