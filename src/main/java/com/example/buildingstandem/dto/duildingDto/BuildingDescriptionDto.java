@@ -1,4 +1,4 @@
-package com.example.buildingstandem.dto;
+package com.example.buildingstandem.dto.duildingDto;
 
 import lombok.Builder;
 import lombok.Data;
