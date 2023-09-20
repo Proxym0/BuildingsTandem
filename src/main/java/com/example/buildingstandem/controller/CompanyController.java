@@ -8,45 +8,51 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static com.example.buildingstandem.mapper.CompanyMapper.INSTANCE;
-import static org.springframework.http.ResponseEntity.ok;
+
+
+
 
 @RestController
 @RequestMapping("/company")
 public class CompanyController {
     @Autowired
     private CompanyService companyService;
-
-
-    @PostMapping("/create")
-    public ResponseEntity<Company> createCompany(@RequestBody CompanyDTO companyDTO) {
-        return ok(companyService.createCompany(CompanyMapper.INSTANCE.dtoToCompany(companyDTO)));
-    }
+    @Autowired
+    private CompanyMapper companyMapper;
 
 
     @GetMapping("/all")
-    public ResponseEntity<List<CompanyDTO>> getAll() {
-        List<CompanyDTO> companyDTOList = new ArrayList<>();
-        companyService.getAllCompany()
-                .forEach(company -> companyDTOList.add(INSTANCE.companyToDTO(company)));
-        return ok(companyDTOList);
+    public List<CompanyDTO> findAllCompanies() {
+        List<Company> companies = companyService.findAllCompanies();
+        return companyMapper.companyToCompanyDTOList(companies);
     }
 
+    @PostMapping("/create")
+    public CompanyDTO createCompany(@RequestBody CompanyDTO companyDTO) {
+        Company company = companyMapper.dtoToCompany(companyDTO);
+        company = companyService.createCompany(company);
+        return companyMapper.companyToDTO(company);
+    }
 
-    @GetMapping("/{nameCompany}")
-    public ResponseEntity<CompanyDTO> getByName(@PathVariable String nameCompany) {
-        Company company = companyService.getCompanyByName(nameCompany);
-        if (company != null) {
-            CompanyDTO companyDTO = INSTANCE.companyToDTO(company);
+    @GetMapping("/{id}")
+    public CompanyDTO findCompanyById(@PathVariable UUID id) {
+        Company company = companyService.getCompanyById(id);
+        return companyMapper.companyToDTO(company);
+    }
+
+    @GetMapping("/name/{nameCompany}")
+    public ResponseEntity<CompanyDTO> findCompanyByName(@PathVariable String nameCompany) {
+        Optional<Company> company = companyService.getCompanyByName(nameCompany);
+        if (company.isPresent()) {
+            CompanyDTO companyDTO = companyMapper.companyToDTO(company.get());
             return ResponseEntity.ok(companyDTO);
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return ResponseEntity.badRequest().build();
         }
     }
 }
+

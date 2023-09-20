@@ -5,10 +5,13 @@ import com.example.buildingstandem.entity.Company;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper
+import java.util.List;
+
+@Mapper(componentModel = "spring")
 public interface CompanyMapper {
-    CompanyMapper INSTANCE = Mappers.getMapper(CompanyMapper.class);
+
     CompanyDTO companyToDTO(Company company);
 
     Company dtoToCompany(CompanyDTO companyDTO);
+    List<CompanyDTO> companyToCompanyDTOList(List<Company> companies);
 }
