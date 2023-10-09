@@ -47,9 +47,7 @@ public class BuildingService {
     }
 
     public void deleteBuilding(UUID id) {
-        buildingRepository.deleteBuildingById(id).get();
-
-
+        buildingRepository.deleteBuildingById(id);
     }
 
 }
