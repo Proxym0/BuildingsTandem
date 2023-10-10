@@ -16,6 +16,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -55,8 +57,24 @@ public class BuildingServiceTest {
     }
 
     @Test
+    @DisplayName("Test for find by id ")
+    public void BuildingService_FindById_ReturnBuilding() {
+        when(buildingRepository.findById(building.getId())).thenReturn(Optional.of(building));
+        Building byId = buildingService.findById(building.getId());
+        assertNotNull(byId);
+    }
+
+    @Test
+    @DisplayName("Test for find all")
+    public void BuildingService_FindAll_ReturnAll() {
+        when(buildingRepository.findAll()).thenReturn(List.of(building));
+        List<Building> buildings = buildingService.findAll();
+        assertNotNull(buildings);
+    }
+
+    @Test
     @DisplayName("Test for remove method")
-    void BuildingService_Remove_ReturnNothing() {
+    public void BuildingService_Remove_ReturnNothing() {
         buildingService.deleteBuilding(building.getId());
 
     }
