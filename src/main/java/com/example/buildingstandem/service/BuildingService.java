@@ -28,7 +28,7 @@ public class BuildingService {
 
     public Building findById(UUID id) {
         Optional<Building> building = buildingRepository.findById(id);
-        if (buildingRepository.existsById(id)) {
+        if (building.isPresent()) {
             return building.get();
         }
             throw new NotFoundException("Building not found");
@@ -47,9 +47,7 @@ public class BuildingService {
     }
 
     public void deleteBuilding(UUID id) {
-        buildingRepository.deleteBuildingById(id).get();
-
-
+        buildingRepository.deleteBuildingById(id);
     }
 
 }
