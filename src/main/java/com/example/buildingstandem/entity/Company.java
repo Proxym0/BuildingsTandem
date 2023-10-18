@@ -13,6 +13,7 @@ import java.util.UUID;
 @Getter
 @Builder
 @ToString
+@EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
 public class Company {
